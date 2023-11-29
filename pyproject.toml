@@ -12,6 +12,8 @@ duckdb = "^0.9.1"
 glaredb = "^0.5.1"
 databend = "^1.2.207"
 datafusion = "^32.0.0"
+tableauhyperapi = "^0.0.18161"
+
 
 [tool.poetry.dev-dependencies]
 

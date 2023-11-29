@@ -14,6 +14,7 @@ Benchmark queries for supported databases are executed within Github Actions. <b
 - [glaredb](https://glaredb.com)
 - [databend](https://databend.com)
 - [datafusion](https://arrow.apache.org/datafusion-python/)
+- [tableauhyperapi](https://tableau.github.io/hyper-db/)
 
 
 ## Results

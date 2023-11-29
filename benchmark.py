@@ -11,6 +11,7 @@ from chdb import session as chs
 import glaredb
 from databend import SessionContext
 import datafusion
+import tableauhyperapi
 
 DBNAME = os.getenv('DBNAME', '*')
 ITERATIONS = int(os.getenv('ITERATIONS', 3))
@@ -85,6 +86,22 @@ def main():
             print("Testing datafusion")
             datafusionx = datafusion.SessionContext()
             benchmark_db("datafusion", lambda query: datafusionx.sql(query).collect())
+        case "tableauhyperapi":
+            print("Testing tableauhyperapi")
+            with tableauhyperapi.HyperProcess(
+                telemetry=tableauhyperapi.Telemetry.DO_NOT_SEND_USAGE_DATA_TO_TABLEAU) as hyper:
+                with tableauhyperapi.Connection(endpoint=hyper.endpoint) as conn:
+                    # version query : 
+                    #   result = conn.execute_scalar_query(query).
+                    # count query : 
+                    #   does not work with uri
+                    # groupby query : 
+                    #   does not work with uri
+                    # groupby-local query :
+                    #   result = conn.execute_query(query)
+                    #   while result.next_row():
+                    #       values = result.get_values()
+                    benchmark_db("tableauhyperapi", lambda query: conn.execute_query(query)) 
 
 if __name__ == "__main__":
     main()
